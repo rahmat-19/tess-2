@@ -1,0 +1,41 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateLocationsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('locations', function (Blueprint $table) {
+            $table->id();
+            $table->string('latitude');
+            $table->string('longitude');
+            $table->string('address_name');
+            $table->string('image')->nullable();
+            $table->string('price')->nullable();
+            $table->string('type')->default('tour');
+            $table->dateTime('open_at')->nullable();
+            $table->dateTime('close_at')->nullable();
+            $table->integer('category_id')->nullable();
+            $table->text('description')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('locations');
+    }
+}

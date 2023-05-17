@@ -1,0 +1,41 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "@babel/preset-react": "^7.13.13",
+        "@tailwindcss/forms": "^0.2.1",
+        "alpinejs": "^2.7.3",
+        "autoprefixer": "^10.1.0",
+        "axios": "^0.21",
+        "bootstrap": "^4.6.0",
+        "jquery": "^3.6",
+        "laravel-mix": "^6.0.6",
+        "lodash": "^4.17.19",
+        "popper.js": "^1.16.1",
+        "postcss": "^8.2.1",
+        "postcss-import": "^12.0.1",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "resolve-url-loader": "^4.0.0",
+        "sass": "1.32.13",
+        "sass-loader": "^11.0.1",
+        "tailwindcss": "^2.0.2"
+    },
+    "dependencies": {
+        "leaflet": "^1.7.1",
+        "leaflet-routing-machine": "^3.2.12",
+        "react-leaflet": "^3.2.1",
+        "react-query": "^3.19.2",
+        "react-toastify": "^7.0.4",
+        "sweetalert2": "^11.1.2",
+        "sweetalert2-react": "^0.8.3"
+    }
+}
