@@ -2,43 +2,59 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Role;
+use App\Models\Village;
+use App\Models\Rekening;
+use App\Models\EventUser;
+use App\Models\Subdomain;
+use App\Models\Permission;
+use App\Models\PreweddingImage;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, HasApiTokens, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role',
+        'name', 'email', 'password', 'kode_referal', 'village_id', 'subdomain_id', 'remember_token'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public function village()
+    {
+        return $this->belongsTo(Village::class);
+    }
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function subdomain()
+    {
+        return $this->hasOne(Subdomain::class);
+    }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class, 'user_permission');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_role');
+    }
+
+    public function rekenings()
+    {
+        return $this->belongsToMany(Rekening::class, 'rekening_user');
+    }
+
+    public function prewedding_image()
+    {
+        return $this->hasMany(PreweddingImage::class);
+    }
+
+    public function event_user()
+    {
+        return $this->hasOne(EventUser::class);
+    }
 }

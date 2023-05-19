@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGraphsTable extends Migration
+class CreateSubdomainTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateGraphsTable extends Migration
      */
     public function up()
     {
-        Schema::create('graphs', function (Blueprint $table) {
+        Schema::create('subdomain', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('sampling_id_1');
-            $table->unsignedBigInteger('sampling_id_2');
-            $table->string('distance');
+            $table->string('name');
+            $table->dateTime('tanggal_aktif');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateGraphsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('graphs');
+        Schema::dropIfExists('subdomain');
     }
 }
