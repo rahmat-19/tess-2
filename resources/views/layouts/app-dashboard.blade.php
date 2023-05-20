@@ -62,6 +62,30 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
+                            <a href="{{ route('halaman-depan.index') }}" class="nav-link {{ Route::is('halaman-depan.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-compass"></i>
+                                <p>
+                                    Halaman Depan
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('event.index') }}" class="nav-link {{ Route::is('event.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-compass"></i>
+                                <p>
+                                    Event Detail
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('gallery.index') }}" class="nav-link {{ Route::is('gallery.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-compass"></i>
+                                <p>
+                                    Galery
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('user.index') }}" class="nav-link {{ Route::is('user.index') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-compass"></i>
                                 <p>
@@ -110,13 +134,13 @@
             @yield('content')
         </div>
         <!-- /.content-wrapper -->
-        <footer class="main-footer">
+        <!-- <footer class="main-footer">
             <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 3.1.0
             </div>
-        </footer>
+        </footer> -->
     </div>
     <!-- ./wrapper -->
 

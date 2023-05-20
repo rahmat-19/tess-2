@@ -11,6 +11,15 @@ require("./bootstrap");
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+// HalamanDepan
+require("./components/HalamanDepan/Index");
+
+// Gallery
+require("./components/Gallery/Index");
+
+// Event
+require("./components/Event/Index");
+
 // User
 require("./Auth/Login");
 

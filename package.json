@@ -30,6 +30,7 @@
         "tailwindcss": "^2.0.2"
     },
     "dependencies": {
+        "antd": "^5.5.0",
         "caniuse-lite": "^1.0.30001488",
         "cookies-next": "^2.1.1",
         "leaflet": "^1.7.1",
