@@ -33,6 +33,7 @@
         "antd": "^5.5.0",
         "caniuse-lite": "^1.0.30001488",
         "cookies-next": "^2.1.1",
+        "dayjs": "^1.11.7",
         "leaflet": "^1.7.1",
         "leaflet-routing-machine": "^3.2.12",
         "react-leaflet": "^3.2.1",
