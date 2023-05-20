@@ -30,10 +30,13 @@
         "tailwindcss": "^2.0.2"
     },
     "dependencies": {
+        "caniuse-lite": "^1.0.30001488",
+        "cookies-next": "^2.1.1",
         "leaflet": "^1.7.1",
         "leaflet-routing-machine": "^3.2.12",
         "react-leaflet": "^3.2.1",
         "react-query": "^3.19.2",
+        "react-router-dom": "^6.11.2",
         "react-toastify": "^7.0.4",
         "sweetalert2": "^11.1.2",
         "sweetalert2-react": "^0.8.3"

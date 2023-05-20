@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
-            $table->integer('kode_referal');
+            $table->integer('kode_referal')->nullable();
             $table->unsignedBigInteger('village_id')->nullable();
             $table->unsignedBigInteger('subdomain_id')->nullable();
             $table->string('remember_token')->nullable();
@@ -28,7 +28,6 @@ return new class extends Migration
         Schema::table('subdomain', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
         });
-
     }
 
     /**
