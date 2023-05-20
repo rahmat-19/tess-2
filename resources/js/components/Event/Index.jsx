@@ -27,10 +27,6 @@ if (document.getElementById("event-app")) {
 
 export function InjectApp() {
 
-    const [open, setOpen] = useState(false);
-    const [confirmLoading, setConfirmLoading] = useState(false)
-
-
 
     return (
         <div className="container-fluid">
@@ -38,10 +34,10 @@ export function InjectApp() {
                 <div className="col">
                     <div className="card">
                         <div className="card-body">
-                            {/* <ModalUi open={opne} setOpen={setOpen} confirmLoading={confirmLoading} setConfirmLoading={setConfirmLoading} /> */}
-                            <div className="d-flex justify-content-between">
+{/* <ModalUi open{opne} setOpen={setOpen} confirmLoading={confirmLoading} setConfirmLoading={setConfirmLoading} /> */}
+<div className="d-flex justify-content-between">
                                 <div></div>
-                                <div><Button type="primary" icon={<PlusOutlined />} onClick={setOpen(false)}>Add New Event</Button></div>
+                                <div><Button type="primary" icon={<PlusOutlined />} >Add New Event</Button></div>
                             </div>
                             <div>
 
