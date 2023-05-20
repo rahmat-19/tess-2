@@ -23,6 +23,14 @@
             width: '100%';
             height: 100vh;
         }
+
+        .sidebar-custome-bg {
+            background-color: #00005a;
+        }
+
+        .navbar-custome-bg {
+            background-color: #6a097d;
+        }
     </style>
 </head>
 
@@ -36,7 +44,7 @@
         </div>
 
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <nav class="main-header navbar navbar-expand navbar-white navbar-custome-bg navbar-light">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -47,7 +55,7 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <aside class="main-sidebar sidebar-custome-bg elevation-4">
             <!-- Brand Logo -->
             <a href="#" class="brand-link">
                 <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -93,14 +101,14 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="{{ route('location.index') }}" class="nav-link {{ Route::is('location.index') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-compass"></i>
                                 <p>
                                     Data Location
                                 </p>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <a href="{{ route('sampling.index') }}" class="nav-link {{ Route::is('sampling.index') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-route"></i>
