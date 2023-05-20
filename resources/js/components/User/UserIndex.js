@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import axios from "axios";
+import { getCookie } from "cookies-next";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +23,20 @@ if (document.getElementById("user-index")) {
 }
 
 export function InjectApp() {
+    const [latLng, setLatLng] = useState(null);
+    const data = async () => {
+        await axios.get('/api/user', {
+            headers: {
+                Authorization : getCookie('token')
+            }
+        })
+    }
+    useEffect(() => {
+        data()
+    }, [])
+    const clickSetLatLng = (coords) => {
+        setLatLng(coords);
+    };
     return (
         <div className="container-fluid">
             <div className="row">
