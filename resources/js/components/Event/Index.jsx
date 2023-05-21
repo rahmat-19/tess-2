@@ -2,8 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Input, Select, Button, Modal, DatePicker, Space, notification, Table, Pagination } from 'antd';
-import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
+import { Input, Button, Space, notification, Table, Popconfirm, message} from 'antd';
+import { SearchOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useState, useEffect } from 'react';
@@ -30,7 +30,10 @@ if (document.getElementById("event-app")) {
 }
 
 export function InjectApp() {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState({
+        isShow: false,
+        id: ''
+    });
     const [data, setData] = useState([])
     const [api, contextHolder] = notification.useNotification();
     const [confirmLoading, setConfirmLoading] = useState(false);
@@ -39,6 +42,36 @@ export function InjectApp() {
         deskripsi: "",
         dateEvent: ''
     })
+    const cancel = (e) => {
+
+    };
+    const confirm = async (e) => {
+        try {
+            await axios.delete(`/api/event_user/${e}/delete`, {
+                headers: {
+                    Authorization : getCookie('token')
+                }
+            })
+
+            api.success({
+                message: `Berhasil Di Hapus`,
+                description:
+                    'Event Berhasil Di Hapus Dari Table',
+                placement: 'bottomRight',
+                duration: 1.5
+            });
+            fatchData()
+        } catch (error) {
+
+            api.error({
+                message: `Gagal Di Hapus`,
+                description:
+                    'Event Gagal Di Hapus Dari Table',
+                placement: 'bottomRight',
+                duration: 1.5
+            });
+        }
+    };
 
     const columns = [
         {
@@ -55,6 +88,31 @@ export function InjectApp() {
             title: 'Deskripsi',
             dataIndex: 'deskripsi',
         },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (_, record) =>(
+                <Space size="middle">
+                    <Button type="primary" style={{backgroundColor: '#ffc107', borderColor: '#ffc107', color: '#fff'}}
+                        onClick={() => {
+                            setOpen(state => ({...state, isShow: true, id: record.id}))
+                        }}
+                    >Edit</Button>
+                    <Popconfirm
+                        title="Delete the task"
+                        description="Are you sure to delete this task?"
+                        onConfirm={() => {
+                            confirm(record.id)
+                        }}
+                        onCancel={cancel}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <Button type="primary" danger >Delete</Button>
+                    </Popconfirm>
+                </Space>
+            )
+        }
     ];
 
     useEffect(() => {
@@ -81,18 +139,18 @@ export function InjectApp() {
 
 
     const handleClick = () => {
-        setOpen(true)
+        setOpen(state => ({...state, isShow: true}))
 
     }
     const handleCancel = () => {
-        setOpen(false);
+        setOpen(state => ({...state, isShow: false, id: ''}))
     };
     const openNotification = (status) => {
         if (status) {
             api.success({
             message: `Berhasil Di Tambahakan`,
             description:
-                'Event Berhasil Di Tambahkan Ke Dalam Database',
+                'Event Berhasil Di Tambahkan Ke Dalam Table',
             placement: 'bottomRight',
             duration: 1.5
             });
@@ -101,7 +159,7 @@ export function InjectApp() {
             api.error({
                 message: `Gagal Di Tambahakan`,
                 description:
-                    'Event Gagal Di Tambahkan Ke Dalam Database',
+                    'Event Gagal Di Tambahkan Ke Dalam Table',
                 placement: 'bottomRight',
                 duration: 1.5
                 });
@@ -122,19 +180,34 @@ export function InjectApp() {
                 })
         } else {
             try {
-                axios.post('/api/event_user/create', {
-                    user_id: 1,
-                    nama: formData.name,
-                    tanggal: dayjs(formData.dateEvent.$d).format('YYYY-MM-DD HH:mm:ss'),
-                    deskripsi: formData.deskripsi
-                }, {
-                    headers: {
-                        Authorization : getCookie('token')
-                    }
-                })
+                if (open.id) {
+                    axios.patch(`/api/event_user/${open.id}/edit`, {
+                        user_id: 1,
+                        nama: formData.name,
+                        tanggal: dayjs(formData.dateEvent.$d).format('YYYY-MM-DD HH:mm:ss'),
+                        deskripsi: formData.deskripsi
+                    }, {
+                        headers: {
+                            Authorization : getCookie('token')
+                        }
+                    })
+                    openNotification(true)
+                } else {
 
-                openNotification(true)
-                setOpen(false)
+                    axios.post('/api/event_user/create', {
+                        user_id: 1,
+                        nama: formData.name,
+                        tanggal: dayjs(formData.dateEvent.$d).format('YYYY-MM-DD HH:mm:ss'),
+                        deskripsi: formData.deskripsi
+                    }, {
+                        headers: {
+                            Authorization : getCookie('token')
+                        }
+                    })
+                    openNotification(true)
+                }
+
+                setOpen(state => ({...state, isShow: false, id: ''}))
                 setFormData({
                         name: '',
                         dateEvent: '',
@@ -142,7 +215,7 @@ export function InjectApp() {
                     })
                 fatchData()
             } catch (error) {
-
+                console.log(error);
                 openNotification(false)
                 // setOpen(false)
             }

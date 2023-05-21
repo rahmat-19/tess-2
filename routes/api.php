@@ -60,7 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('event_user/{id}/show', [EventUserController::class, 'show']);
     Route::post('event_user/create', [EventUserController::class, 'store']);
     Route::patch('event_user/{id}/edit', [EventUserController::class, 'update']);
-    Route::post('event_user/{id}/delete', [EventUserController::class, 'delete']);
+    Route::delete('event_user/{id}/delete', [EventUserController::class, 'delete']);
 
     // rekening
     Route::get('rekening', [RekeningController::class, 'index']);
@@ -108,6 +108,4 @@ Route::middleware('auth:sanctum')->group(function () {
     // rekening_user
     Route::get('rekening_user', [RekeningUserController::class, 'index']);
     Route::post('rekening_user/{userId}/add', [RekeningUserController::class, 'addRekening']);
-
-    
 });
