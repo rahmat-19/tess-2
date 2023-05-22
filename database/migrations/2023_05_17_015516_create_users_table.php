@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('village_id')->nullable();
             $table->unsignedBigInteger('role_id');
             $table->string('remember_token')->nullable();
-            $table->foreign('village_id')->references('id')->on('village');
+            $table->foreign('village_id')->references('id')->on(config('laravolt.indonesia.table_prefix').'villages');
             $table->foreign('role_id')->references('id')->on('roles');
             $table->timestamps();
         });

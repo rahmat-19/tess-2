@@ -48,6 +48,7 @@ class PreweddingImageController extends Controller
             'user_id' => $userId,
             'image' => $imageName,
             'name' => $request->name,
+            'url' => url("uploads/prewedding_images/$imageName"),
         ];
         $preweddingImage = PreweddingImage::create($preweddingImageCreate);
 
@@ -89,6 +90,7 @@ class PreweddingImageController extends Controller
         $rules = [
             'image' => 'sometimes|required|string',
             'name' => 'sometimes|required|string',
+            'url' => 'sometimes|required|string',
         ];
 
         try {
@@ -155,6 +157,7 @@ class PreweddingImageController extends Controller
                 'user_id' => $userId,
                 'image' => $imageName,
                 'name' => $imageName,
+                'url' => "/uploads/prewedding_images/$imageName"
             ];
 
             $preweddingImages[] = PreweddingImage::create($preweddingImageCreate);

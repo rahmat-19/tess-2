@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('role_permission', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('permission_id');
             $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('permission_id');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('permission_id')->references('id')->on('permission')->onDelete('cascade')->onUpdate('cascade');
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

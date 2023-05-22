@@ -16,9 +16,9 @@ class AuthenticationController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
-            'kode_referal' => 'required',
+            // 'kode_referal' => 'required',
             // 'village_id' => 'required|exists:village,id',
-            'role_id' => 'required',
+            // 'role_id' => 'required',
         ];
 
         $customMessages = [
@@ -34,8 +34,12 @@ class AuthenticationController extends Controller
                 'errors' => $e->errors()
             ], 422);
         }
+
+        $lastUser = User::orderBy('id', 'desc')->first();
         $input = $request->all();
         $input['password'] = bcrypt($input['password']);
+        $input['role_id'] = 3;
+        $input['kode_referal'] = $lastUser->kode_referal + 1;
         $user = User::create($input);
 
         $success['token'] = $user->createToken('auth_token')->plainTextToken;

@@ -30,9 +30,9 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
-            'kode_referal' => 'required',
+            // 'kode_referal' => 'required',
             // 'village_id' => 'required|exists:village,id',
-            'role_id' => 'required'
+            // 'role_id' => 'required'
         ];
 
         $customMessages = [
@@ -48,14 +48,15 @@ class UserController extends Controller
                 'errors' => $e->errors()
             ], 422);
         }
+        $lastUser = User::orderBy('id', 'desc')->first();
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'kode_referal' => $request->kode_referal,
+            'kode_referal' => $lastUser->kode_referal + 1,
             'village_id' => $request->village_id,
-            'role_id' => $request->role_id,
+            'role_id' => $request->role_id ? $request->role_id : 3,
         ]);
         return response()->json([
             'message' => 'User created successfully', 
