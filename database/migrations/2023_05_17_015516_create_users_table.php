@@ -18,16 +18,13 @@ return new class extends Migration
             $table->string('password');
             $table->integer('kode_referal')->nullable();
             $table->unsignedBigInteger('village_id')->nullable();
-            $table->unsignedBigInteger('subdomain_id')->nullable();
+            $table->unsignedBigInteger('role_id');
             $table->string('remember_token')->nullable();
             $table->foreign('village_id')->references('id')->on('village');
-            $table->foreign('subdomain_id')->references('id')->on('subdomain');
+            $table->foreign('role_id')->references('id')->on('roles');
             $table->timestamps();
         });
 
-        Schema::table('subdomain', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users');
-        });
     }
 
     /**

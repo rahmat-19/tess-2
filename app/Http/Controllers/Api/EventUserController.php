@@ -11,7 +11,11 @@ class EventUserController extends Controller
 {
     public function index()
     {
-        $eventUsers = EventUser::all();
+
+        $userId = auth()->user()->id;
+
+        // $eventUsers = EventUser::all();
+        $eventUsers = EventUser::where('user_id', $userId)->get();
 
         if ($eventUsers) {
             return response()->json([
@@ -26,7 +30,6 @@ class EventUserController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'user_id' => 'required',
             'nama' => 'required|string',
             'tanggal' => 'required',
             'deskripsi' => 'required|string',
@@ -40,8 +43,10 @@ class EventUserController extends Controller
             ], 422);
         }
 
+        $userId = auth()->user()->id;
+
         $eventUser = EventUser::create([
-            'user_id' => $request->user_id,
+            'user_id' => $userId,
             'nama' => $request->nama,
             'tanggal' => $request->tanggal,
             'deskripsi' => $request->deskripsi,
@@ -55,7 +60,9 @@ class EventUserController extends Controller
 
     public function show($id)
     {
-        $eventUser = EventUser::find($id);
+        $userId = auth()->user()->id;
+        $eventByUser = EventUser::where('user_id', $userId)->get();
+        $eventUser = $eventByUser->find($id);
 
         if ($eventUser) {
             return response()->json([
@@ -69,7 +76,9 @@ class EventUserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $eventUser = EventUser::find($id);
+        $userId = auth()->user()->id;
+        $eventByUser = EventUser::where('user_id', $userId)->get();
+        $eventUser = $eventByUser->find($id);
 
         if (!$eventUser) {
             return response()->json([
@@ -78,7 +87,6 @@ class EventUserController extends Controller
         }
 
         $rules = [
-            'user_id' => 'sometimes|required',
             'nama' => 'sometimes|required|string',
             'tanggal' => 'sometimes|required',
             'deskripsi' => 'sometimes|required',

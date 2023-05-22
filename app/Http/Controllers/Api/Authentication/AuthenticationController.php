@@ -18,7 +18,7 @@ class AuthenticationController extends Controller
             'password' => 'required',
             'kode_referal' => 'required',
             // 'village_id' => 'required|exists:village,id',
-            // 'subdomain_id' => 'required|exists:subdomain,id',
+            'role_id' => 'required',
         ];
 
         $customMessages = [
@@ -56,8 +56,7 @@ class AuthenticationController extends Controller
             $success['name'] = $auth->name;
             $success['email'] = $auth->email;
             $success['id'] = $auth->id;
-            $success['role'] = $auth->roles;
-            $success['permission'] = $auth->permissions;
+            $success['role'] = $auth->role->name;
 
             return response()->json([
                 'success' => true,
@@ -76,7 +75,7 @@ class AuthenticationController extends Controller
     {
         if ($request->user()) {
             return response()->json([
-                'data' => $request->user()
+                'data' => $request->user()->load('role')
             ]);
         }
     }

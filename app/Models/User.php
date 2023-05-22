@@ -20,7 +20,7 @@ class User extends Authenticatable
     use HasFactory, HasApiTokens, Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password', 'kode_referal', 'village_id', 'subdomain_id', 'remember_token'
+        'name', 'email', 'password', 'kode_referal', 'village_id', 'subdomain_id', 'remember_token', 'role_id'
     ];
 
     public function village()
@@ -33,14 +33,19 @@ class User extends Authenticatable
         return $this->hasOne(Subdomain::class);
     }
 
-    public function permissions()
+    public function role()
     {
-        return $this->belongsToMany(Permission::class, 'user_permission');
+        return $this->belongsTo(Role::class);
     }
 
-    public function roles()
+    // public function hasRole($roleName)
+    // {
+    //     return $this->role->name === $roleName;
+    // }
+
+    public function hasPermission($permissionName)
     {
-        return $this->belongsToMany(Role::class, 'user_role');
+        return $this->role->permissions()->where('name', $permissionName)->exists();
     }
 
     public function rekenings()

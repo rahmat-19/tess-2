@@ -13,7 +13,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $user = User::with('permissions', 'roles', 'rekenings', 'prewedding_image', 'subdomain', 'village')->get();
+        $user = User::with('role', 'rekenings')->get();
 
         if (!$user) {
             return response()->json([
@@ -32,7 +32,7 @@ class UserController extends Controller
             'password' => 'required',
             'kode_referal' => 'required',
             // 'village_id' => 'required|exists:village,id',
-            'subdomain_id' => 'required|exists:subdomain,id',
+            'role_id' => 'required'
         ];
 
         $customMessages = [
@@ -55,17 +55,17 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'kode_referal' => $request->kode_referal,
             'village_id' => $request->village_id,
-            'subdomain_id' => $request->subdomain_id,
+            'role_id' => $request->role_id,
         ]);
         return response()->json([
             'message' => 'User created successfully', 
-            'data' => $user], 
-        201);
+            'data' => $user
+        ], 201);
     }
 
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::with('role')->find($id);
 
         if (!$user) {
          return response()->json([
@@ -93,7 +93,7 @@ class UserController extends Controller
             'password' => 'sometimes|required',
             'kode_referal' => 'sometimes|required',
             'village_id' => 'sometimes|required',
-            'subdomain_id' => 'sometimes|required',
+            'role_id' => 'sometimes|required',
         ];
         
         $customMessages = [
@@ -120,7 +120,7 @@ class UserController extends Controller
     
         $user->update($data);
         return response()->json([
-            'message' => 'User created successfully', 
+            'message' => 'User updated successfully', 
             'data' => $user], 
         200);
     }
