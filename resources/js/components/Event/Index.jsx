@@ -182,7 +182,6 @@ export function InjectApp() {
             try {
                 if (open.id) {
                     axios.patch(`/api/event_user/${open.id}/edit`, {
-                        user_id: 1,
                         nama: formData.name,
                         tanggal: dayjs(formData.dateEvent.$d).format('YYYY-MM-DD HH:mm:ss'),
                         deskripsi: formData.deskripsi
@@ -195,7 +194,6 @@ export function InjectApp() {
                 } else {
 
                     axios.post('/api/event_user/create', {
-                        user_id: 1,
                         nama: formData.name,
                         tanggal: dayjs(formData.dateEvent.$d).format('YYYY-MM-DD HH:mm:ss'),
                         deskripsi: formData.deskripsi
