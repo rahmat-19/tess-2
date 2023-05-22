@@ -1,6 +1,8 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Modal, Upload } from 'antd';
-import { useState } from 'react';
+import axios from 'axios';
+import { getCookie } from 'cookies-next';
+import { useEffect, useState } from 'react';
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -24,6 +26,67 @@ export default function PrewedGalery() {
         setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
     };
     const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+    const handleRemove = async (file) => {
+        // Remove the file from the fileList state
+        const response = await axios.delete(`/api/prewedding_images/${file.id}/delete`, {
+            headers: {
+                Authorization : getCookie('token')
+            }
+        });
+
+        console.log(response);
+
+        const updatedFileList = fileList.filter((f) => f.id !== file.id);
+        setFileList(updatedFileList);
+      };
+
+    useEffect(() => {
+        fatchData()
+    }, [])
+    const fatchData = async () => {
+        const response = await axios.get('/api/prewedding_images', {
+            headers: {
+                Authorization : getCookie('token')
+            }
+        });
+
+        setFileList(response.data.data)
+    }
+    const handleUpload = async (options) => {
+        const { onSuccess, onError, file } = options;
+
+
+        try {
+            const formData = new FormData();
+            formData.append('image', file);
+
+
+
+            // Send the image file to the server using Axios
+            const response = await axios.post('/api/prewedding_images/create', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization : getCookie('token')
+            }
+            });
+
+            // Handle the success case
+            if (response.status === 201) {
+            onSuccess(response.data, file);
+            // message.success('Image uploaded successfully');
+            console.log(response.data.data);
+            setFileList(state => [...state, response.data.data])
+            } else {
+            onError();
+            console.log('not ok');
+            // message.error('Failed to upload image');
+        }
+    } catch (error) {
+        onError();
+        console.log(error);
+            // message.error('Failed to upload image');
+        }
+    };
     const uploadButton = (
         <div>
         <PlusOutlined />
@@ -41,12 +104,14 @@ export default function PrewedGalery() {
         <div>
 
             <Upload
-                customRequest={({ onSuccess }) =>
-                onSuccess("ok")}
+                // customRequest={({ onSuccess }) =>
+                // onSuccess("ok")}
+                customRequest={handleUpload}
                 listType="picture-card"
                 fileList={fileList}
                 onPreview={handlePreview}
-                onChange={handleChange}
+                onRemove={handleRemove}
+                // onChange={handleChange}
             >
                 {fileList.length >= 8 ? null : uploadButton}
             </Upload>

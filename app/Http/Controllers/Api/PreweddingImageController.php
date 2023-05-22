@@ -30,7 +30,7 @@ class PreweddingImageController extends Controller
         $userId = auth()->user()->id;
         $rules = [
             'image' => 'required',
-            'name' => 'required|string',
+            // 'name' => 'required|string',
         ];
 
         try {
@@ -47,7 +47,7 @@ class PreweddingImageController extends Controller
         $preweddingImageCreate = [
             'user_id' => $userId,
             'image' => $imageName,
-            'name' => $request->name,
+            'name' => $imageName,
             'url' => url("uploads/prewedding_images/$imageName"),
         ];
         $preweddingImage = PreweddingImage::create($preweddingImageCreate);
@@ -118,7 +118,7 @@ class PreweddingImageController extends Controller
         $preweddingImage = PreweddingImage::find($id);
 
         if ($preweddingImage) {
-            unlink('uploads/prewedding_images'.'/'.$preweddingImage->image);
+            unlink('uploads/prewedding_images' . '/' . $preweddingImage->image);
             $preweddingImage->delete();
             return response()->json([
                 'message' => 'Prewedding Image Deleted Successfully!',
@@ -162,7 +162,7 @@ class PreweddingImageController extends Controller
 
             $preweddingImages[] = PreweddingImage::create($preweddingImageCreate);
         }
-    
+
 
         return response()->json([
             'message' => 'Prewedding Image Created Successfully!',
@@ -174,7 +174,7 @@ class PreweddingImageController extends Controller
     {
         foreach ($request->ids as $id) {
             $preweddingImage = PreweddingImage::where('id', $id)->get();
-            unlink('uploads/prewedding_images'. '/'. $preweddingImage[0]->image);
+            unlink('uploads/prewedding_images' . '/' . $preweddingImage[0]->image);
             PreweddingImage::where('id', $id)->delete();
         }
 
