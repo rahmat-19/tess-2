@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { Input, Button, Space, notification, Table, Popconfirm, message} from 'antd';
+import { Input, Button, Space, notification, Table, Popconfirm, message, Modal} from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import dayjs from 'dayjs'
@@ -164,14 +165,61 @@ export function InjectApp() {
     ]
 
 
+    const [modal, contextHolderDeleteAll] = Modal.useModal();
+    const handleDeleteAll = async () => {
+        try {
+            axios.post('/api/greeting/deleteMany', {
+                ids: selectedRowKeys
+            }, {
+                headers: {
+                    Authorization : getCookie('token')
+                }
+            })
+            api.success({
+                message: `Berhasil Di Hapus`,
+                description:
+                    'Greeting Berhasil Di Hapus Dari Table',
+                placement: 'bottomRight',
+                duration: 1.5
+            });
+            fatchData()
+        } catch (error) {
+            api.error({
+                message: `Gagal Di Hapus`,
+                description:
+                    'Greeting Gagal Di Hapus Dari Table',
+                placement: 'bottomRight',
+                duration: 1.5
+            });
+        }
+
+    }
+    const confirmDeleteAll = () => {
+        modal.confirm({
+            title: 'Yakin Ingin Menghapus Seluruh Data Yang Di Pilih?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Data Yang Sudah Terhapus Tidak Akan Bisa Di Kembalikan',
+            okText: 'Ya',
+            cancelText: 'Tidak',
+            onOk: handleDeleteAll
+        });
+    };
+
+
     return (
         <div className="container-fluid">
             {contextHolder}
+            {contextHolderDeleteAll}
             <ModalUi open={open} setOpen={setOpen}/>
             <div className="row">
                 <div className="col">
                     <div className="card">
                         <div className="card-body">
+                        {
+                            selectedRowKeys.length > 0 ? (
+                                <Button type="primary" danger onClick={confirmDeleteAll}>Delete All</Button>
+                            ) : ''
+                        }
                         <Table
                                 rowSelection={rowSelection}
                                 columns={columns}
