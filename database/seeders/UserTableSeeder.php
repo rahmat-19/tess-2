@@ -21,5 +21,19 @@ class UserTableSeeder extends Seeder
             'kode_referal' => 1,
             'role_id' => 1
         ]);
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@mail.com',
+            'password' => bcrypt('password'),
+            'kode_referal' => 2,
+            'role_id' => 2
+        ]);
+        User::create([
+            'name' => 'User',
+            'email' => 'user@mail.com',
+            'password' => bcrypt('password'),
+            'kode_referal' => 3,
+            'role_id' => 3
+        ]);
     }
 }

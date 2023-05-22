@@ -129,4 +129,15 @@ class GreetingController extends Controller
             'message' => 'Greeting Not Found!'
         ], 404);
     }
+
+    public function deleteMany(Request $request)
+    {
+        foreach ($request->ids as $id) {
+            Greeting::where('id', $id)->delete();
+        }
+
+        return response()->json([
+            'message' => 'Greetings Deleted Successfully!'
+        ]);
+    }
 }

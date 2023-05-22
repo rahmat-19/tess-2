@@ -11,7 +11,7 @@ class Village extends Model
 {
     use HasFactory;
 
-    protected  $table = 'village';
+    protected  $table = 'indonesia_villages';
 
     protected $guarded = [];
 

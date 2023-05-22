@@ -99,7 +99,7 @@ class EventUserController extends Controller
                 'errors' => $e->errors()
             ], 422);
         }
-    
+
         $request->validate($rules);
 
         $data = $request->only(array_keys($rules));
@@ -126,5 +126,15 @@ class EventUserController extends Controller
         return response()->json([
             'message' => 'Event User Not Found!'
         ], 404);
+    }
+
+    public function deleteMany(Request $request)
+    {
+        foreach ($request->ids as $id) {
+            EventUser::where('id', $id)->delete();
+        }
+        return response()->json([
+            'message' => 'Event Users Deleted Successfully!'
+        ]);
     }
 }

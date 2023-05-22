@@ -11,7 +11,7 @@ class City extends Model
 {
     use HasFactory;
 
-    protected  $table = 'city';
+    protected  $table = 'indonesia_cities';
 
     protected $guarded = [];
 
