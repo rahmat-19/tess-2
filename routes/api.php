@@ -81,7 +81,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('greeting/{id}/show', [GreetingController::class, 'show']);
     Route::post('greeting/create', [GreetingController::class, 'store']);
     Route::patch('greeting/{id}/edit', [GreetingController::class, 'update']);
-    Route::post('greeting/{id}/delete', [GreetingController::class, 'delete']);
+    Route::delete('greeting/{id}/delete', [GreetingController::class, 'delete']);
 
     // permission
     Route::get('permission', [PermissionController::class, 'index']);

@@ -7,6 +7,7 @@ import { Input, Button, Space, notification, Table, Popconfirm, message} from 'a
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import dayjs from 'dayjs'
+import ModalUi from "./ModalUi";
 import { getCookie } from "cookies-next";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,11 @@ if (document.getElementById("greeting-app")) {
 export function InjectApp() {
     const [data, setData] = useState([])
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
+    const [open, setOpen] = useState({
+        isShow: false,
+        id: ''
+    });
 
     useEffect(() => {
         fatchData()
@@ -77,6 +83,37 @@ export function InjectApp() {
 
     };
 
+    const cancel = (e) => {
+
+    };
+    const confirm = async (e) => {
+        try {
+            await axios.delete(`/api/greeting/${e}/delete`, {
+                headers: {
+                    Authorization : getCookie('token')
+                }
+            })
+
+            api.success({
+                message: `Berhasil Di Hapus`,
+                description:
+                    'Greeting Berhasil Di Hapus Dari Table',
+                placement: 'bottomRight',
+                duration: 1.5
+            });
+            fatchData()
+        } catch (error) {
+
+            api.error({
+                message: `Gagal Di Hapus`,
+                description:
+                    'Greeting Gagal Di Hapus Dari Table',
+                placement: 'bottomRight',
+                duration: 1.5
+            });
+        }
+    };
+
     const columns = [
         {
             title: 'Nama',
@@ -85,6 +122,14 @@ export function InjectApp() {
         {
             title: 'Greetings',
             dataIndex: 'greeting_word',
+            render: (_, record) => (
+                <Button type="primary" style={{width: '50%'}} onClick={() => {
+                    setOpen(state => ({...state, isShow: true, id: record.id}))
+                }}>{
+                    record.greeting_word.length > 20 ?
+                        `${record.greeting_word.substring(0, 20)}...` : `${record.greeting_word}`
+                }</Button>
+            )
         },
         {
             title: 'Kehadiran',
@@ -116,6 +161,7 @@ export function InjectApp() {
 
     return (
         <div className="container-fluid">
+            <ModalUi open={open} setOpen={setOpen}/>
             <div className="row">
                 <div className="col">
                     <div className="card">
