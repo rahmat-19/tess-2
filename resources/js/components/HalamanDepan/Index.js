@@ -34,7 +34,7 @@ export function InjectApp() {
                     <div className="card">
                         <div className="card-body">
                             <div className="mb-3">
-                                <label for="font" className="form-label">Pilih Jenis Font Yang Digunakan</label>
+                                <label htmlFor="font" className="form-label">Pilih Jenis Font Yang Digunakan</label>
                                 <Select
                                     id="font"
                                     style={{
@@ -65,7 +65,7 @@ export function InjectApp() {
                                 />
                             </div>
                             <div className="mb-3">
-                                <label for="ucapan" className="form-label">Berikan Ucapan Pada Halaman Depan Anda</label>
+                                <label htmlFor="ucapan" className="form-label">Berikan Ucapan Pada Halaman Depan Anda</label>
                                 <TextArea id="ucapan" rows={4} />
                             </div>
                         </div>

@@ -129,7 +129,9 @@
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <a href="route('logout')" class="nav-link" onclick="event.preventDefault();
-                                                                                this.closest('form').submit();">
+                                                                                this.closest('form').submit();
+                                                                                clearAllCookies();
+                                                                                ">
                                     <i class="nav-icon fas fa-sign-out-alt"></i>
                                     <p>
                                         Logout
@@ -185,6 +187,23 @@
             $('#locationTable').DataTable();
             $('#samplingTable').DataTable();
         });
+        if (document.cookie.includes('token')) {
+            console.log('ok');
+        } else {
+            // Cookie does not exist
+            window.location.href = '/login';
+        }
+
+        function clearAllCookies() {
+            var cookies = document.cookie.split(";");
+
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                var eqPos = cookie.indexOf("=");
+                var cookieName = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            }
+        }
     </script>
 </body>
 

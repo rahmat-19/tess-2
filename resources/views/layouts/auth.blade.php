@@ -14,6 +14,15 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{asset('css/auth.css')}}">
 
+    <script>
+        if (document.cookie.includes('token')) {
+            window.location.href = '/halaman-depan';
+        } else {
+            // Cookie does not exist
+            console.log('ok');
+        }
+    </script>
+
     <!-- Scripts -->
     <script src="{{ asset('js/auth.js') }}" defer></script>
 </head>
@@ -38,8 +47,6 @@
     <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous">
     </script>
-
-
 
 </body>
 
