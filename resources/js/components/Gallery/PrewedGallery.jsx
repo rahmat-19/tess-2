@@ -3,6 +3,8 @@ import { Modal, Upload } from 'antd';
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -16,6 +18,20 @@ export default function PrewedGalery() {
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
     const [fileList, setFileList] = useState([])
+
+    const [modal, contextHolder] = Modal.useModal();
+    const confirm = (file) => {
+        modal.confirm({
+            title: `Yakin untuk Meghapus Gambar InI ?`,
+            icon: <ExclamationCircleOutlined />,
+            content: 'Gambar ini akan hilang dan tidak akan bisa di kembalikan',
+            okText: 'Ya',
+            cancelText: 'Tidak',
+            onOk: () => {
+                handleRemove(file.id)
+            }
+        });
+    };
     const handleCancel = () => setPreviewOpen(false);
     const handlePreview = async (file) => {
         if (!file.url && !file.preview) {
@@ -26,18 +42,19 @@ export default function PrewedGalery() {
         setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
     };
     const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
-    const handleRemove = async (file) => {
+    const handleRemove = async (id) => {
         // Remove the file from the fileList state
-        const response = await axios.delete(`/api/prewedding_images/${file.id}/delete`, {
+        const response = await axios.delete(`/api/prewedding_images/${id}/delete`, {
             headers: {
                 Authorization : getCookie('token')
             }
         });
 
-        console.log(response);
+        if (response.status === 201) {
+            const updatedFileList = fileList.filter((f) => f.id !== id);
+            setFileList(updatedFileList);
+        }
 
-        const updatedFileList = fileList.filter((f) => f.id !== file.id);
-        setFileList(updatedFileList);
       };
 
     useEffect(() => {
@@ -102,7 +119,7 @@ export default function PrewedGalery() {
 
     return(
         <div>
-
+            {contextHolder}
             <Upload
                 // customRequest={({ onSuccess }) =>
                 // onSuccess("ok")}
@@ -110,7 +127,9 @@ export default function PrewedGalery() {
                 listType="picture-card"
                 fileList={fileList}
                 onPreview={handlePreview}
-                onRemove={handleRemove}
+                onRemove={(file) => {
+                    confirm(file)
+                }}
                 // onChange={handleChange}
             >
                 {fileList.length >= 8 ? null : uploadButton}
