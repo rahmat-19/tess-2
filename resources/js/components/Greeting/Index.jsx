@@ -29,6 +29,7 @@ if (document.getElementById("greeting-app")) {
 export function InjectApp() {
     const [data, setData] = useState([])
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [api, contextHolder] = notification.useNotification();
 
     const [open, setOpen] = useState({
         isShow: false,
@@ -37,6 +38,9 @@ export function InjectApp() {
 
     useEffect(() => {
         fatchData()
+        setInterval(() => {
+            fatchData()
+        }, 5000);
     }, [])
 
     const fatchData = async () => {
@@ -45,6 +49,7 @@ export function InjectApp() {
                 Authorization : getCookie('token')
             }
         })
+        console.log(datas);
         setData(datas.data.data.map(item => ({ ...item, key: item.id })))
         setTableParams({
             ...tableParams,
@@ -161,6 +166,7 @@ export function InjectApp() {
 
     return (
         <div className="container-fluid">
+            {contextHolder}
             <ModalUi open={open} setOpen={setOpen}/>
             <div className="row">
                 <div className="col">

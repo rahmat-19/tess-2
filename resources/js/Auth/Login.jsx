@@ -98,7 +98,7 @@ export function InjectApp() {
 
                         <div className="flex items-center justify-end mt-4">
                             <a className="underline text-sm text-gray-600 hover:text-gray-900"
-                                href="{{ asset('register') }}">
+                                href="/register">
                                 Register
                             </a>
 
