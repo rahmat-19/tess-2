@@ -117,14 +117,14 @@
                                 </p>
                             </a>
                         </li> -->
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a href="{{ route('sampling.index') }}" class="nav-link {{ Route::is('sampling.index') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-route"></i>
                                 <p>
                                     Data Sampling
                                 </p>
                             </a>
-                        </li>
+                        </li> -->
                         <li class="nav-item">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
