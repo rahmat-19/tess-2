@@ -53,7 +53,7 @@ export function InjectApp() {
                         axios.defaults.headers.common[
                             'Authorization'
                         ] = `Bearer ${res.data.token}`
-                        window.location.href = '/user';
+                        window.location.href = '/halaman-depan';
                         // history.push('/user');
                     })
         } catch (error) {

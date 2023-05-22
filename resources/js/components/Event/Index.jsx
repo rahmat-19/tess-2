@@ -99,8 +99,8 @@ export function InjectApp() {
                         }}
                     >Edit</Button>
                     <Popconfirm
-                        title="Delete the task"
-                        description="Are you sure to delete this task?"
+                        title="Delete Event"
+                        description="Are you sure to delete this event?"
                         onConfirm={() => {
                             confirm(record.id)
                         }}
@@ -222,7 +222,6 @@ export function InjectApp() {
 
         }
     }
-    const [selectionType, setSelectionType] = useState('checkbox');
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const onSelectChange = (newSelectedRowKeys) => {
         console.log('selectedRowKeys changed: ', newSelectedRowKeys);

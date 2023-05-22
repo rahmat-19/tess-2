@@ -94,6 +94,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('greeting.index') }}" class="nav-link {{ Route::is('greeting.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-compass"></i>
+                                <p>
+                                    Greeting
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('user.index') }}" class="nav-link {{ Route::is('user.index') ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-compass"></i>
                                 <p>
