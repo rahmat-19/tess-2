@@ -2,9 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Input, Button, Space, notification, Table, Popconfirm, message} from 'antd';
-import { SearchOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
-
+import { Input, Button, Space, notification, Table, Popconfirm, message, Modal} from 'antd';
+import { SearchOutlined, PlusOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useState, useEffect } from 'react';
 import axios from "axios";
@@ -244,10 +243,51 @@ export function InjectApp() {
 
     };
 
+    const [modal, contextHolderDeleteAll] = Modal.useModal();
+    const handleDeleteAll = async () => {
+        try {
+            axios.post('/api/event_user/deleteMany', {
+                ids: selectedRowKeys
+            }, {
+                headers: {
+                    Authorization : getCookie('token')
+                }
+            })
+            api.success({
+                message: `Berhasil Di Hapus`,
+                description:
+                    'Greeting Berhasil Di Hapus Dari Table',
+                placement: 'bottomRight',
+                duration: 1.5
+            });
+            fatchData()
+        } catch (error) {
+            api.error({
+                message: `Gagal Di Hapus`,
+                description:
+                    'Greeting Gagal Di Hapus Dari Table',
+                placement: 'bottomRight',
+                duration: 1.5
+            });
+        }
+
+    }
+    const confirmDeleteAll = () => {
+        modal.confirm({
+            title: 'Yakin Ingin Menghapus Seluruh Data Yang Di Pilih?',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Data Yang Sudah Terhapus Tidak Akan Bisa Di Kembalikan',
+            okText: 'Ya',
+            cancelText: 'Tidak',
+            onOk: handleDeleteAll
+        });
+    };
+
 
     return (
         <div className="container-fluid">
             {contextHolder}
+            {contextHolderDeleteAll}
             <ModalUi open={open} handleOk={handleOk} handleCancel={handleCancel} formData={formData} setFormData={setFormData}/>
             <div className="row">
                 <div className="col">
@@ -262,6 +302,11 @@ export function InjectApp() {
                             <br />
 
                             <div>
+                            {
+                                selectedRowKeys.length > 0 ? (
+                                    <Button type="primary" danger onClick={confirmDeleteAll}>Delete All</Button>
+                                ) : ''
+                            }
                             <Table
                                 rowSelection={rowSelection}
                                 columns={columns}

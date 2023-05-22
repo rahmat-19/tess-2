@@ -38,7 +38,7 @@ export default function ModalUi({open, handleOk, handleCancel, formData, setForm
                                 <div className="row">
                                     <div className="col">
                                         <label htmlFor="nameEvent" className="form-label">Nama Event</label>
-                                        <Input id="nameEvent" onChange={e => setFormData({...formData, name: e.target.value})} value={formData.name} placeholder="Nama Event" />;
+                                        <Input id="nameEvent" onChange={e => setFormData({...formData, name: e.target.value})} value={formData.name} placeholder="Nama Event" />
                                     </div>
                                     <div className="col">
                                         <label htmlFor="tanggal" className="form-label">Tanggal</label>
