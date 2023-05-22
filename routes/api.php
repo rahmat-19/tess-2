@@ -103,6 +103,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware(['authorize:manage:all'])->post('role_permission/{roleId}/assign', [RolePermissionController::class, 'assignPermission']);
 
     // rekening_user
+
     Route::middleware(['authorize:manage:all'])->get('rekening_user', [RekeningUserController::class, 'index']);
     Route::middleware(['authorize:manage:all'])->post('rekening_user/{userId}/add', [RekeningUserController::class, 'addRekening']);
 

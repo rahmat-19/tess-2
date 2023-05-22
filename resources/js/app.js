@@ -17,6 +17,9 @@ require("./components/HalamanDepan/Index");
 // Gallery
 require("./components/Gallery/Index");
 
+// Gallery
+require("./components/Greeting/Index");
+
 // Event
 require("./components/Event/Index");
 

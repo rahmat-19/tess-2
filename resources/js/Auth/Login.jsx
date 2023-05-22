@@ -53,7 +53,7 @@ export function InjectApp() {
                         axios.defaults.headers.common[
                             'Authorization'
                         ] = `Bearer ${res.data.token}`
-                        window.location.href = '/user';
+                        window.location.href = '/halaman-depan';
                         // history.push('/user');
                     })
         } catch (error) {
@@ -88,17 +88,17 @@ export function InjectApp() {
             </div>
 
             <div className="block mt-4">
-                            <label for="remember_me" className="inline-flex items-center">
+                            {/* <label htmlFor="remember_me" className="inline-flex items-center">
                                 <input id="remember_me" type="checkbox"
                                     className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                     name="remember" />
                                 <span className="ml-2 text-sm text-gray-600">Remember me</span>
-                            </label>
+                            </label> */}
                         </div>
 
                         <div className="flex items-center justify-end mt-4">
                             <a className="underline text-sm text-gray-600 hover:text-gray-900"
-                                href="{{ asset('register') }}">
+                                href="/register">
                                 Register
                             </a>
 
