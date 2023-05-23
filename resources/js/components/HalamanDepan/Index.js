@@ -41,7 +41,7 @@ export function InjectApp() {
                                         width:'100%'
                                     }}
                                     showSearch
-                                    placeholder="Select a person"
+                                    placeholder="Select a Font"
                                     optionFilterProp="children"
                                     onChange={onChange}
                                     onSearch={onSearch}

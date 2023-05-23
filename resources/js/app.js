@@ -25,6 +25,8 @@ require("./components/Event/Index");
 
 // User
 require("./Auth/Login");
+// User
+require("./Auth/Register");
 
 // User
 require("./components/User/UserIndex");
