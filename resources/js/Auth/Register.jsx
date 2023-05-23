@@ -36,8 +36,6 @@ export function InjectApp() {
 
     const [formData, setFormData] = useState({
         name: "",
-        email: "",
-        password: '',
         confirmPassword: '',
         provincyId: '',
         cityId: ''
@@ -105,14 +103,14 @@ export function InjectApp() {
         setStatus(null)
         const formData = {
             name: FormData.name,
-            email: FormData.email,
-            password: FormData.password
+            email: email,
+            password: password
         }
-        console.log(FormData.email);
-        console.log(FormData.password);
+        console.log(email);
+        console.log(password);
         try {
             await axios
-                    .post('/api/register', {name: FormData.name, email: FormData.email, password: FormData.password})
+                    .post('/api/register', {name: FormData.name, email: email, password: password})
                     .then(res => res.data)
                     .then(res => {
                         setCookie('token', `Bearer ${res.data.token}`)
@@ -121,14 +119,7 @@ export function InjectApp() {
                         ] = `Bearer ${res.data.token}`
                         window.location.href = '/halaman-depan';
                     })
-                    setFormData({
-                        name: '',
-                        provincyId: '',
-                        cityId: '',
-                        password: '',
-                        confirmPassword: '',
-                        email: ''
-                    })
+
         } catch (error) {
             setMessage(error.toString())
             if (error.response.status !== 422) throw error
@@ -148,13 +139,13 @@ export function InjectApp() {
     };
 
     useEffect(() => {
-        if (formData.password != formData.confirmPassword) {
+        if (password != formData.confirmPassword) {
             setErrorPw(true)
         } else {
             setErrorPw(false)
         }
 
-    }, [formData.password, formData.confirmPassword])
+    }, [password, formData.confirmPassword])
 
     return (
         <div className="font-sans text-gray-900 antialiased">
@@ -174,7 +165,7 @@ export function InjectApp() {
                                 Email
                             </label>
 
-                            <input onChange={e => setFormData({...formData, email: e.target.value})} value={formData.email} className="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="email" type="email" name="email" required="required" />
+                            <input onChange={e => setEmail(e.target.value)} value={email} className="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="email" type="email" name="email" required="required" />
                         </div>
                         <div className="mt-4">
                             <label className="block font-medium text-sm text-gray-700" htmlFor="email">
@@ -226,7 +217,7 @@ export function InjectApp() {
                                 Password
                             </label>
 
-                            <input onChange={e => setFormData({...formData, password: e.target.value})} value={formData.password} className="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="password" type="password" name="password" required="required" autoComplete="new-password" />
+                            <input onChange={e => setPassword(e.target.value)} value={password} className="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full" id="password" type="password" name="password" required="required" autoComplete="new-password" />
                         </div>
 
                         <div className="mt-4">
