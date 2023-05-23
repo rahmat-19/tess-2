@@ -20,8 +20,8 @@ class City extends Model
         return $this->belongsTo(Province::class);
     }
 
-    public function villages()
+    public function districts()
     {
-        return $this->hasMany(Village::class);
+        return $this->hasMany(District::class);
     }
 }

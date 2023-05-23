@@ -115,5 +115,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 Route::get('provinces', [PlaceController::class, 'getProvinces']);
-Route::get('{code}/cities', [PlaceController::class, 'getCities']);
-// Route::get('{code}/villages', [PlaceController::class, 'getVillages']);
+Route::get('{provinceCode}/cities', [PlaceController::class, 'getCities']);
+Route::get('{cityCode}/villages', [PlaceController::class, 'getVillages']);

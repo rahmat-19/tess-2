@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Province;
 use App\Models\Village;
-use Illuminate\Http\Request;
+use App\Models\District;
 
 class PlaceController extends Controller
 {
@@ -27,14 +27,15 @@ class PlaceController extends Controller
         ]);
     }
 
-    // public function getVillages($cityCode)
-    // {
-    //     dd(123);
-    //     $villages = Village::where('city_code', $cityCode)->get();
-    //     return response()->json([
-    //         'data' => $villages
-    //     ]);
-    // }
+    public function getVillages($cityCode)
+    {
+        $districts = District::where('city_code', $cityCode)->pluck('code');
+        $villages = Village::whereIn('district_code', $districts)->get();
+        
+        return response()->json([
+            'data' => $villages
+        ]);
+    }
 
 
 }
