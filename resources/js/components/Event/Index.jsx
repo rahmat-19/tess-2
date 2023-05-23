@@ -260,6 +260,7 @@ export function InjectApp() {
                 placement: 'bottomRight',
                 duration: 1.5
             });
+            setSelectedRowKeys([])
             fatchData()
         } catch (error) {
             api.error({

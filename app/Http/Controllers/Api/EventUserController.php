@@ -130,9 +130,8 @@ class EventUserController extends Controller
 
     public function deleteMany(Request $request)
     {
-        foreach ($request->ids as $id) {
-            EventUser::where('id', $id)->delete();
-        }
+
+        EventUser::whereIn('id', $request->ids)->delete();
         return response()->json([
             'message' => 'Event Users Deleted Successfully!'
         ]);

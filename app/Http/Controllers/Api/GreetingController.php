@@ -101,7 +101,7 @@ class GreetingController extends Controller
                 'errors' => $e->errors()
             ], 422);
         }
-    
+
         $request->validate($rules);
 
         $data = $request->only(array_keys($rules));
@@ -132,9 +132,7 @@ class GreetingController extends Controller
 
     public function deleteMany(Request $request)
     {
-        foreach ($request->ids as $id) {
-            Greeting::where('id', $id)->delete();
-        }
+        Greeting::whereIn('id', $request->ids)->delete();
 
         return response()->json([
             'message' => 'Greetings Deleted Successfully!'

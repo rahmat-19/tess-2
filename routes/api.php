@@ -65,7 +65,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware(['authorize:manage:all,create:eventuser'])->post('event_user/create', [EventUserController::class, 'store']);
     Route::middleware(['authorize:manage:all,edit:eventuser'])->patch('event_user/{id}/edit', [EventUserController::class, 'update']);
     Route::middleware(['authorize:manage:all,delete:eventuser'])->delete('event_user/{id}/delete', [EventUserController::class, 'delete']);
-    Route::middleware(['authorize:manage:all,delete:eventuser'])->delete('event_user/deleteMany', [EventUserController::class, 'deleteMany']);
+    Route::middleware(['authorize:manage:all,delete:eventuser'])->post('event_user/deleteMany', [EventUserController::class, 'deleteMany']);
 
     // rekening
     Route::middleware(['authorize:manage:all,read:rekening'])->get('rekening', [RekeningController::class, 'index']);
@@ -87,7 +87,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware(['authorize:manage:all,create:greeting'])->post('greeting/create', [GreetingController::class, 'store']);
     Route::middleware(['authorize:manage:all,edit:greeting'])->patch('greeting/{id}/edit', [GreetingController::class, 'update']);
     Route::middleware(['authorize:manage:all,delete:greeting'])->delete('greeting/{id}/delete', [GreetingController::class, 'delete']);
-    Route::middleware(['authorize:manage:all,delete:greeting'])->delete('greeting/deleteMany', [GreetingController::class, 'deleteMany']);
+    Route::middleware(['authorize:manage:all,delete:greeting'])->post('greeting/deleteMany', [GreetingController::class, 'deleteMany']);
 
     // permission
     Route::middleware(['authorize:manage:all,read:permission'])->get('permission', [PermissionController::class, 'index']);
@@ -110,7 +110,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // rekening_user
     Route::middleware(['authorize:manage:all,read:rekeninguser'])->get('rekening_user', [RekeningUserController::class, 'index']);
     Route::middleware(['authorize:manage:all,update:rekeninguser'])->post('rekening_user/{userId}/add', [RekeningUserController::class, 'addRekening']);
-
 });
 
 
