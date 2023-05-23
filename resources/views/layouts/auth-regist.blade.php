@@ -16,6 +16,14 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/auth.js') }}" defer></script>
+    <script>
+        if (document.cookie.includes('token')) {
+            window.location.href = '/halaman-depan';
+        } else {
+            // Cookie does not exist
+            console.log('ok');
+        }
+    </script>
 </head>
 
 <body>

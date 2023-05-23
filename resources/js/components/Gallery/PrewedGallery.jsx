@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Modal, Upload } from 'antd';
+import { Modal, Upload, message } from 'antd';
 import axios from 'axios';
 import { getCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
@@ -20,6 +20,7 @@ export default function PrewedGalery() {
     const [fileList, setFileList] = useState([])
 
     const [modal, contextHolder] = Modal.useModal();
+    const [messageApi, McontextHolder] = message.useMessage();
     const confirm = (file) => {
         modal.confirm({
             title: `Yakin untuk Meghapus Gambar InI ?`,
@@ -53,6 +54,19 @@ export default function PrewedGalery() {
         if (response.status === 201) {
             const updatedFileList = fileList.filter((f) => f.id !== id);
             setFileList(updatedFileList);
+            messageApi.open({
+                type: 'success',
+                content: 'Gambar berhasil di hapus',
+                style: { zIndex: 9999,
+                marginTop: '10vh', }
+            });
+        } else {
+            messageApi.open({
+                type: 'error',
+                content: 'Gambar gagal di hapus',
+                style: { zIndex: 9999,
+                marginTop: '10vh', }
+            });
         }
 
       };
@@ -93,14 +107,26 @@ export default function PrewedGalery() {
             // message.success('Image uploaded successfully');
             console.log(response.data.data);
             setFileList(state => [...state, response.data.data])
+            messageApi.open({
+                type: 'success',
+                content: 'Gambar berhasil di tambahkan',
+                style: { zIndex: 9999,
+                marginTop: '10vh', }
+            });
             } else {
             onError();
-            console.log('not ok');
+
             // message.error('Failed to upload image');
         }
     } catch (error) {
         onError();
         console.log(error);
+        messageApi.open({
+            type: 'error',
+            content: 'Gambar gagal di tambahkan',
+            style: { zIndex: 9999,
+            marginTop: '10vh', }
+        });
             // message.error('Failed to upload image');
         }
     };
@@ -119,6 +145,7 @@ export default function PrewedGalery() {
 
     return(
         <div>
+            {McontextHolder}
             {contextHolder}
             <Upload
                 // customRequest={({ onSuccess }) =>
